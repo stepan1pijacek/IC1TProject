@@ -1,6 +1,7 @@
 # IC1TProject
 
-##Exploitable
+## Exploitable
+
 securebank.c contains three vulnerabilities. First is string format. Attacker is able to read or modify variable (e.g. sys_pwd) by printing address of variable with %s or %n formatters.
 For instance by passing $(python -c 'print "\xc2\xd8\xff\xff"+"%08x-"*3+"%s"') to argv[1] where hex symbols are address of target variable in little endian order, 3 is number of addresses
 which stands between esp and controlled memory space, then due to %s target variable will be printed. Addresses can be read from gdb or any other debugger. Disabling ASLR is required.  
