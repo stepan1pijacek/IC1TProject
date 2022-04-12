@@ -1,4 +1,5 @@
 import click
+from Exploitation import AutomatedPenTest as AtP
 
 
 @click.group()
@@ -24,7 +25,8 @@ def help_command():
 @main.command()
 @click.option('--auto', '-a')
 def automated():
-    
+    test = AtP.AutomatedPenTest("~/IC1TProject/SecureBank/build/output 'bob'")
+
 
 if __name__ == '__main__':
     main()
