@@ -26,6 +26,7 @@ def help_command():
 @click.option('--auto', '-a')
 def automated():
     test = AtP.AutomatedPenTest("~/IC1TProject/SecureBank/build/output 'bob'")
+    test.begin_pen_test()
 
 
 if __name__ == '__main__':
