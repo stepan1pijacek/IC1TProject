@@ -1,14 +1,15 @@
 import click
-from Exploitation import AutomatedPenTest as AtP
+from ArmorPiercer import AutomatedPenTest as AtP
 
 
-@click.group()
+@click.command()
+@click.option('--help', '-h')
 def main():
     """Application for penetration testing of the SecureBank"""
     pass
 
 
-@main.command()
+@click.command()
 @click.option('--help', '-help')
 def help_command():
     click.echo('ArmorPiercer version 0.0.0.1 \n'
@@ -22,12 +23,12 @@ def help_command():
                '---------------------------------------------------------------------\n')
 
 
-@main.command()
-@click.option('--auto', '-a')
-def automated():
+@click.command()
+@click.option('--auto', '-a', help='Automated penetration test')
+@click.option('--process-path', '-i',
+            required=False, help="Path to the process under the attack")
+def automated(process_path):
+    print('Fuck you')
     test = AtP.AutomatedPenTest("~/IC1TProject/SecureBank/build/output 'bob'")
     test.begin_pen_test()
 
-
-if __name__ == '__main__':
-    main()
