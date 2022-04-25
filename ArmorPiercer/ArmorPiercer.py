@@ -32,11 +32,12 @@ def automated_attack(process, user_name, bank_account):
 @main.command()
 @click.option('--count',
                 help="Number of As to fill buffer to cause buffer overflow")
-def buffer_overflow(count = 0):
+def buffer_overflow(count = 32):
     """Command to perform buffer overflow
         eg. python3 ArmorPiercer.py buffer-overflow --count=10
     """
-    click.echo('a' * int(count))
+    attack_payload = 'a' * int(count)
+    click.echo(attack_payload.strip())
 
 @main.command()
 @click.option('--int-number',

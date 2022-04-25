@@ -1,0 +1,3 @@
+* Buffer overflow works with the python, using 32 a's (or 29) we are able to completly destroy entire application to the point where it is unusable
+* Integer overflow can be used only after the password is obtained through string formating error, password is pass
+* String formating works but we need to do some tweeking to validate if memory adreess changes even with the protections turned off
