@@ -1,4 +1,24 @@
 # IC1TProject
+## Exploiter
+
+ArmorPiercer.py is PYTHON script intended to pen test *securebank.c* application. ArmorPiercer is inteded to be used as CLI application.
+### Table of commands for the application
+| Command name | Command | Command options | output |
+| ------------ | ------- | --------------- | ------ |
+| Version      | --version | NaN           | Current version of the app |
+| Help         | --help  | NaN             | Returns list of available commands |
+| Buffer overflow | buffer-overflow | --count [INT] | Uppon providing *count* option it prints given number of the *a*'s to the console |
+| Integer overflow | integer-overflow | --int-number [INT] | Prints given number in to the console |
+| Automated attack | automated-attack | Multiple options, see table below | Performs automated attack on the given process using python sub process |
+
+#### Table of automated attack options
+| option | input type | help output |
+| ------ | ---------- | ----------- |
+| --process | STR | Process to be attacked |
+| --user-name | STR | User name of the SecureBank user |
+| --bank-account | INT | Bank account for attacka purposes |
+
+~~test~~
 
 ## Exploitable
 
